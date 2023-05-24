@@ -16,6 +16,22 @@ main{
     padding: 1rem;
     max-width: 1000px;
 }
+.mainNav{
+    color: aliceblue;
+    background-color: black;
+}
+.mainNav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.mainNav li{
+    all: unset;
+}
+.mainNav a{
+    color: aliceblue;
+    text-decoration: none;
+}
 a{
     color: rgb(14, 79, 219);
 }
