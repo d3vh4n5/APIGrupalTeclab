@@ -13,7 +13,6 @@ router.get("/productos", (req,res) => {
    id: 2,
    name: "Destornillador",
         },
-        ,
         {
    id: 3,
    name: "Pinza",
