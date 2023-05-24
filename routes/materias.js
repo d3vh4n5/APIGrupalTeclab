@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router()
 
 router.get('/materias', (req, res) => {
-    res.send('Hello World!')
+    res.send('iniciando el modulo de materias')
 })
+
+
 
 
 
