@@ -8,8 +8,9 @@ const profesores = require('./api/profesores');
 Ruta para servir archivos estáticos desde la carpeta 'assets'
 Esto también se conoce como middleware
 */
-// app.use(express.static(__dirname + '/views'));
-app.use('/assets', express.static(__dirname + '/views/assets'));
+app.use(express.static(__dirname + '/views'));
+// cancele la de abajo porque sino no me toma la ruta de index desde todos los archivos
+// app.use('/assets', express.static(__dirname + '/views/assets'));
 // app.get('/', (req, res) => res.send('<h1>Tu primer API!</h1>'));
 
 
@@ -17,7 +18,9 @@ app.use('/assets', express.static(__dirname + '/views/assets'));
 
 
 //agregamos un middleware para usar las rutas
-app.use(require('./router'));
+app.use(require('./routes/index'));
+app.use(require('./routes/productos'));
+// app.use(require('./routes/contactos'));
 
 
 
