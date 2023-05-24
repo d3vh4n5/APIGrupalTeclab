@@ -1,3 +1,3 @@
-const profes = ['juansito', 'pepito', 'teresa'];
+const profesores = ['juansito', 'pepito', 'teresa', 'alexis'];
 
-module.exports = profes;
+module.exports = profesores;

@@ -20,6 +20,7 @@ app.use(express.static(__dirname + '/views'));
 //agregamos un middleware para usar las rutas
 app.use(require('./routes/index'));
 app.use(require('./routes/productos'));
+app.use(require('./routes/profesores'));
 // app.use(require('./routes/contactos'));
 
 

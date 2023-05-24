@@ -27,9 +27,6 @@ router.get('/productos/:id', (req,res,)=>{
 })
 
 
-router.get('/profesores', (req, res) => {
-   res.json(profesores);
-})
 
 
 module.exports = router;
