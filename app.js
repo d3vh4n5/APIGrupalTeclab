@@ -22,6 +22,8 @@ app.use(require('./routes/index'));
 app.use(require('./routes/productos'));
 app.use(require('./routes/profesores'));
 app.use(require('./routes/materias'));
+app.use(require('./routes/notas'));
+app.use(require('./routes/alumnos'));
 // app.use(require('./routes/contactos'));
 
 
