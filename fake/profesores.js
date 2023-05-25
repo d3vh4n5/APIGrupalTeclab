@@ -1,5 +1,6 @@
 const profesores = [
     {
+        "id" : 0,
         "nombre" : "Elon Musk",
         "especializacion" : "Ingeniero Civil",
         "sexo:" : "Masculino",
@@ -9,6 +10,7 @@ const profesores = [
     },
     
     {
+        "id" : 1,
         "nombre" : "Lisa Su",
         "especializacion" : "Marketing",
         "sexo:" : "Femenino",
@@ -17,6 +19,7 @@ const profesores = [
         "activo" : true
     },
     {
+        "id" : 2,
         "nombre" : "Steve Jobs",
         "especializacion" : "Ingenieron en Sistemas",
         "sexo:" : "Masculino",
@@ -25,6 +28,7 @@ const profesores = [
         "activo" : false
     },
     {
+        "id" : 3,
         "nombre" : "Michael Jackson",
         "especializacion" : "Cantante",
         "sexo:" : "Masculino",

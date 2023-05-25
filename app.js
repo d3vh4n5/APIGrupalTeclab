@@ -9,17 +9,21 @@ app.use(bodyParser.urlencoded({ extended: true })); // para análisis de cuerpo 
 
 /* Motor de vistas para interfaces web */
 app.set('view engine', 'ejs');
-/*
-Ruta para servir archivos estáticos desde la carpeta 'assets'
-Esto también se conoce como middleware
-*/
-app.use(express.static(__dirname + '/views'));
-// cancele la de abajo porque sino no me toma la ruta de index desde todos los archivos
-// app.use('/assets', express.static(__dirname + '/views/assets'));
-// app.get('/', (req, res) => res.send('<h1>Tu primer API!</h1>'));
+
+app.use(express.static(__dirname + '/views'));// Este middleware será la carpeta para todos los archivos estáticos, y vistas
 
 
+// Middleware para verificar la variable "key"
+// app.use((req, res, next) => {
+//      const expectedKey = 'jnasdn17436snaksdn';
+//      const receivedKey = req.query.key;
+   
+//      if (!receivedKey || receivedKey !== expectedKey) {
+//        return res.status(400).send('La variable "key" es necesaria y debe tener el valor correcto.');
+//      }
 
+//      next();
+// });
 
 
 //agregamos middlewares para usar las rutas
@@ -40,7 +44,7 @@ app.use(require('./routes/alumnos'));
 app.use(require('./routes/productos'));
 // app.use(require('./routes/contactos'));
 
-
+/* Fin de los middlewares de rutas*/
 
 
 
@@ -48,7 +52,7 @@ app.use(require('./routes/productos'));
 
 
 app.use((req, res, next) =>{
-     res.status(404).send('<h1>Not Found</h1>');
+     res.status(404).sendFile(__dirname +'/views/html/404.html');
 })
 /*La aplicación queda escuchando y también dá una respuesta en la consola 
 para facilitarnos las pruebas y el acceso a la web*/
