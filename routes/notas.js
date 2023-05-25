@@ -19,14 +19,15 @@ const notas = [
 ]
 
 router.get('/notas', (req, res) => {
+    console.log('Hubo una solicitud de tipo GET en /notas');
     res.json(notas);
  })
 
- 
-
-// router.get('/notas', (req, res) => {
-//     res.send('Modulo activado pero sin contenido')
-// })
+ router.post('/notas', (req, res) => {
+    const nuevaNota = req.body; // Obtener los datos enviados por el cliente en la solicitud POST
+    console.log(nuevaNota);
+    res.send(`Sacaste un: ${nuevaNota.valor} en ${nuevaNota.materia} con ${nuevaNota.profesor}`); // Enviar una respuesta al cliente
+});
 
  
 

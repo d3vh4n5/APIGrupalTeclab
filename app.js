@@ -2,11 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
-const profesores = require('./api/profesores');
+const bodyParser = require('body-parser'); // esto es para poder usar los datos que vienen por POST
+app.use(bodyParser.json()); // para análisis de cuerpo JSON
+app.use(bodyParser.urlencoded({ extended: true })); // para análisis de cuerpo de formulario
+
 
 /* Motor de vistas para interfaces web */
 app.set('view engine', 'ejs');
-
 /*
 Ruta para servir archivos estáticos desde la carpeta 'assets'
 Esto también se conoce como middleware
@@ -20,18 +22,22 @@ app.use(express.static(__dirname + '/views'));
 
 
 
-//agregamos un middlewares para usar las rutas
+//agregamos middlewares para usar las rutas
 
 //Vistas
 app.use(require('./routes/index'));
 app.use(require('./routes/endpoints'));
+app.use(require('./routes/help'));
 
 //Endpoints
-app.use(require('./routes/productos'));
 app.use(require('./routes/profesores'));
-app.use(require('./routes/materias'));
+// app.use(require('./routes/materias'));
 app.use(require('./routes/notas'));
 app.use(require('./routes/alumnos'));
+
+
+//endpoints de pruebas, ignorenlos
+app.use(require('./routes/productos'));
 // app.use(require('./routes/contactos'));
 
 
