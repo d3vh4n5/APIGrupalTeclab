@@ -34,7 +34,7 @@ router.get('/materias', (req, res) => {
 
 // Agregar una materia
 
-app.post('/materias', (req, res) => {
+router.post('/materias', (req, res) => {
     const { nombre, descripcion } = req.body;
     const query = 'INSERT INTO materias (nombre, descripcion) VALUES (?,?)';
     connection.query(query, [nombre, descripcion], (err, result) => {
@@ -49,7 +49,7 @@ app.post('/materias', (req, res) => {
 
 
 // Actualizar una materia por ID
-app.patch('/materias/:id', (req, res) => {
+router.patch('/materias/:id', (req, res) => {
     const { id } = req.params;
     const { nombre, descripcion } = req.body;
     const query = 'UPDATE materias SET nombre = ?, descripcion = ? WHERE id = ?';
@@ -65,7 +65,7 @@ app.patch('/materias/:id', (req, res) => {
 
 // Eliminar una materia por ID
 
-// app.delete('/materias/:id', (req, res) => {
+// router.delete('/materias/:id', (req, res) => {
 //     const { id } = req.params;
 //     const query = 'DELETE FROM materias WHERE id =?';
 //     connection.query(query, [id], (err, result) => {
