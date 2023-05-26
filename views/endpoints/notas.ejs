@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <title>Help</title>
+</head>
+<body>
+    <main>
+        <%- include('../partials/nav')%>
+        <h1>información sobre el endpoint de notas</h1>
+        
+        <h3>'/notas'</h3>
+        <p>
+            Al usarse así directamente, este devolverá un JSON con todas las notas 
+            de la base de datos, sería el método GET.
+        </p>
+        <br>
+        <h4>Estructura:</h4>
+        <blockquote class="quoteCode">
+            <pre>
+                <code>
+const nuevaNota = {
+    id: "default",
+    valor: 8,
+    materia: 'historia',
+    alumno: 'Juan',
+    profesor: 'Einstein'
+};
+                </code>
+            </pre>
+        </blockquote>
+        <br>
+        <h2>POST</h2>
+        <h4>Ejemplo de como usar el método post con JavaScript Vanila:</h4>
+        <blockquote class="quoteCode">
+            <pre>
+                <code>
+// Función para realizar una solicitud POST al endpoint /notas
+function crearNota(nuevaNota) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', `${apiUrl}/notas`, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log('Respuesta del servidor:', xhr.responseText);
+            } else {
+                console.error('Error al enviar la solicitud:', xhr.statusText);
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify(nuevaNota));
+}
+                </code>
+            </pre>
+        </blockquote>
+        <br>
+        <h4>Ejemplo de como usar el método post con la librería axios:</h4>
+        <blockquote class="quoteCode">
+            <pre>
+                <code>
+const axios = require('axios');
+
+const apiUrl = 'http://localhost:5000';
+
+// Función para realizar una solicitud POST al endpoint /notas
+async function crearNota(nuevaNota) {
+    try {
+        const response = await axios.post(`${apiUrl}/notas`, nuevaNota);
+        console.log('Respuesta del servidor:', response.data);
+    } catch (error) {
+        console.error('Error al enviar la solicitud:', error.message);
+    }
+}
+                </code>
+            </pre>
+        </blockquote>
+        
+        
+    </main>
+</body>
+</html>
