@@ -1,6 +1,6 @@
-// const express = require('express');
-// const router = express.Router()
-// //const mysql = require('mysql');
+const express = require('express');
+const router = express.Router()
+//const mysql = require('mysql');
 const { db_local, db_real } = require('../db');
 
 const connection = db_local;
@@ -13,14 +13,14 @@ const connection = db_local;
 // //     database: 'nombre_db',
 // // });
 
-// //   // Conectar a la base de datos
-// //     connection.connect((err) => {
-// //     if (err) {
-// //         console.error('Error de conexión a la base de datos: ', err);
-// //     } else {
-// //         console.log('Conexión exitosa a la base de datos');
-// //     }
-// // });
+  // Conectar a la base de datos
+    connection.connect((err) => {
+    if (err) {
+        console.error('Error de conexión a la base de datos: ', err);
+    } else {
+        console.log('Conexión exitosa a la base de datos');
+    }
+});
 
 // Obtener todas las materias
 router.get('/materias', (req, res) => {
