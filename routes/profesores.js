@@ -9,7 +9,7 @@ const datos = async () => {
 			if (error) {
 				reject(error);
 			} else {
-				resolve(results);
+				resolve(results); // El resolve seria igual al return, pero es para funcion async
 			}
 		});
 	});
