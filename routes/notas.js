@@ -14,6 +14,7 @@ router.get('/notas', (req, res) => {
     const nuevaNota = req.body; // Obtener los datos enviados por el cliente en la solicitud POST
     console.log(nuevaNota);
     res.send(`Sacaste un: ${nuevaNota.valor} en ${nuevaNota.materia} con ${nuevaNota.profesor}`); // Enviar una respuesta al cliente
+
 });
 
 /* Solo falta metodo put, y luego aprender el manejo de la db */
@@ -30,6 +31,10 @@ router.put('/notas/:id', async (req, res) =>{
     }
 })
 
+router.delete('/notas/:id', (req,res)=>{
+	let id = req.params.id;
+	res.send(`Has eliminado correctamente a ${id}`)
+})
  
 
 
