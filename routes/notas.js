@@ -11,10 +11,27 @@ router.get('/notas', (req, res) => {
  /* meotdo get pero con parámetros  y get query*/
 
  router.post('/notas', (req, res) => {
-    const nuevaNota = req.body; // Obtener los datos enviados por el cliente en la solicitud POST
-    console.log(nuevaNota);
-    res.send(`Sacaste un: ${nuevaNota.valor} en ${nuevaNota.materia} con ${nuevaNota.profesor}`); // Enviar una respuesta al cliente
+    // const nuevaNota = req.body; // Obtener los datos enviados por el cliente en la solicitud POST
+    // console.log(nuevaNota);
+    // res.send(`Sacaste un: ${nuevaNota.valor} en ${nuevaNota.materia} con ${nuevaNota.profesor}`); // Enviar una respuesta al cliente
+    
 
+    // db_local.connect( error=>{ 
+    //     if (error) {throw error}
+    // })
+    
+    let {valor, materia, alumno, profesor} = req.body;
+    let consulta = `INSERT INTO notas VALUES ('default', '${valor}','${materia}','${alumno}','${profesor}')`;
+    
+    db_local.query(consulta, (error, results) =>{
+        if (error) {throw error}
+        else {
+            console.log(results);
+            console.log('Inserción correcta');
+            res.send('Inserción correcta')
+        }
+    })
+    // db_local.end()
 });
 
 /* Solo falta metodo put, y luego aprender el manejo de la db */
@@ -32,10 +49,11 @@ router.put('/notas/:id', async (req, res) =>{
 })
 
 router.delete('/notas/:id', (req,res)=>{
-	let id = req.params.id;
-	res.send(`Has eliminado correctamente a ${id}`)
+    let id = req.params.id;
+	// res.send(`Has eliminado correctamente a ${id}`)
+    res.send('Este endpoint no posee un metodo delete')
 })
- 
+
 
 
 module.exports = router;

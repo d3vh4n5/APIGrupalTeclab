@@ -1,0 +1,60 @@
+CREATE TABLE notas (
+  id int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  valor double(3,2) NOT NULL,
+  materia varchar(30) NOT NULL,
+  alumno varchar(30) NOT NULL,
+  profesor varchar(30) NOT NULL
+)
+
+CREATE TABLE IF NOT EXISTS profesores (
+    dni int(7) NOT NULL PRIMARY KEY,
+    nombre varchar(50) NOT NULL,
+    apellido varchar(50) NOT NULL,
+    materia int(11) NOT NULL
+)
+
+INSERT INTO `profesores` (dni, nombre, apellido, materia)
+VALUES
+    ('123456789', 'Pedro', 'Picapiedras', FLOOR(RAND() * 10) + 1),
+    ('987654321', 'Pablo', 'Mármol', FLOOR(RAND() * 10) + 1),
+    ('456789123', 'Juan', 'Pérez', FLOOR(RAND() * 10) + 1),
+    ('789123456', 'María', 'Gómez', FLOOR(RAND() * 10) + 1),
+    ('321654987', 'Ana', 'López', FLOOR(RAND() * 10) + 1),
+    ('654987321', 'Carlos', 'Martínez', FLOOR(RAND() * 10) + 1),
+    ('987321654', 'Laura', 'Rodríguez', FLOOR(RAND() * 10) + 1),
+    ('789654123', 'Fernando', 'Sánchez', FLOOR(RAND() * 10) + 1),
+    ('654123789', 'Sofía', 'Hernández', FLOOR(RAND() * 10) + 1),
+    ('321789654', 'Javier', 'Gutiérrez', FLOOR(RAND() * 10) + 1),
+    ('111111111', 'Luis', 'González', FLOOR(RAND() * 10) + 1),
+    ('222222222', 'Elena', 'López', FLOOR(RAND() * 10) + 1),
+    ('333333333', 'Diego', 'Sánchez', FLOOR(RAND() * 10) + 1),
+    ('444444444', 'Andrea', 'Gómez', FLOOR(RAND() * 10) + 1),
+    ('555555555', 'Sergio', 'Pérez', FLOOR(RAND() * 10) + 1),
+    ('666666666', 'Valentina', 'Rodríguez', FLOOR(RAND() * 10) + 1),
+    ('777777777', 'Alejandro', 'Hernández', FLOOR(RAND() * 10) + 1),
+    ('888888888', 'Isabella', 'Martínez', FLOOR(RAND() * 10) + 1),
+    ('999999999', 'Miguel', 'García', FLOOR(RAND() * 10) + 1),
+    ('000000000', 'Camila', 'López', FLOOR(RAND() * 10) + 1);
+
+    INSERT INTO notas (valor, materia, alumno, profesor)
+VALUES
+    (7.5, 'Matemáticas', 'Juan Pérez', 'Pedro Gómez'),
+    (8.2, 'Historia', 'María López', 'Laura Rodríguez'),
+    (6.9, 'Física', 'Carlos Martínez', 'Ana García'),
+    (9.7, 'Literatura', 'Sofía Hernández', 'Fernando Sánchez'),
+    (7.1, 'Química', 'Luis González', 'Camila López'),
+    (6.8, 'Biología', 'Ana García', 'Pedro Gómez'),
+    (8.5, 'Geografía', 'Javier Gutiérrez', 'Laura Rodríguez'),
+    (9.3, 'Inglés', 'Isabella Martínez', 'Diego Sánchez'),
+    (7.6, 'Arte', 'Miguel García', 'Sofía Hernández'),
+    (8.9, 'Música', 'Camila López', 'Carlos Martínez'),
+    (9.1, 'Matemáticas', 'Ana García', 'Pedro Gómez'),
+    (7.8, 'Historia', 'Juan Pérez', 'Laura Rodríguez'),
+    (8.3, 'Física', 'María López', 'Carlos Martínez'),
+    (6.5, 'Literatura', 'Sofía Hernández', 'Diego Sánchez'),
+    (9.6, 'Química', 'Luis González', 'Ana García'),
+    (7.3, 'Biología', 'Carlos Martínez', 'Pedro Gómez'),
+    (8.7, 'Geografía', 'Miguel García', 'Laura Rodríguez'),
+    (6.4, 'Inglés', 'Isabella Martínez', 'Fernando Sánchez'),
+    (9.2, 'Arte', 'Camila López', 'Sofía Hernández'),
+    (7.9, 'Música', 'Javier Gutiérrez', 'Carlos Martínez');
