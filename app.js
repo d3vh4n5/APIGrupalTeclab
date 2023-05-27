@@ -35,7 +35,7 @@ app.use(require('./routes/help'));
 
 //Endpoints
 app.use(require('./routes/profesores'));
-// app.use(require('./routes/materias'));
+app.use(require('./routes/materias'));
 app.use(require('./routes/notas'));
 app.use(require('./routes/alumnos'));
 
