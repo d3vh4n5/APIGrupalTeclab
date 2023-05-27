@@ -36,6 +36,8 @@ VALUES
     ('999999999', 'Miguel', 'García', FLOOR(RAND() * 10) + 1),
     ('000000000', 'Camila', 'López', FLOOR(RAND() * 10) + 1);
 
+Al tener el id autoincremetal, se puede obviar en los datos de ingreso
+
     INSERT INTO notas (valor, materia, alumno, profesor)
 VALUES
     (7.5, 'Matemáticas', 'Juan Pérez', 'Pedro Gómez'),
