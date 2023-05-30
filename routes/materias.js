@@ -144,9 +144,9 @@ async function obtenerRecursoId(req, res) {
 //Funcion reutlizable para crear un nuevo registro
 async function crearRecurso(req, res) {
     try {
-    const { name, description } = req.body;
-    const query = 'INSERT INTO materias (name, description) VALUES (?, ?)';
-    await connection.query(query, [name, description]);
+    const { nombre_materia } = req.body;
+    const query = 'INSERT INTO materias (nombre_materia) VALUES (?)';
+    await connection.query(query, [nombre_materia]);
 
     res.status(200).json({ message: 'Recurso creado correctamente' });
     } catch (err) {
@@ -177,9 +177,9 @@ async function crearRecurso(req, res) {
 async function actualizarRecurso(req, res) {
     try {
     const id = req.params.id;
-    const { name, description } = req.body;
-    const query = 'UPDATE materias SET name = ?, description = ? WHERE id = ?';
-    await connection.query(query, [name, description, id]);
+    const { nombre_materia } = req.body;
+    const query = 'UPDATE materias SET nombre_materia = ? WHERE id = ?';
+    await connection.query(query, [nombre_materia, id]);
 
     res.send('Recurso actualizado correctamente');
     } catch (err) {
