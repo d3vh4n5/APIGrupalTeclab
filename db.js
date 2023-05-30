@@ -1,3 +1,5 @@
+// @author : Juan Angel Basgall - https://www.linkedin.com/in/juanangelbasgall/
+
 require('dotenv').config()
 const mysql = require('mysql');
 
@@ -8,12 +10,37 @@ const db_local = mysql.createConnection({
     database: process.env.DB_NAME
 });
 const db_real = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
+    host: process.env.DB2_HOST,
+    user: process.env.DB2_USER,
+    password: process.env.DB2_PASS,
+    database: process.env.DB2_NAME,
+    port: process.env.DB2_PORT
 });
 
+const db_proyecto = mysql.createConnection({
+    host: process.env.DB3_HOST,
+    user: process.env.DB3_USER,
+    password: process.env.DB3_PASS,
+    database: process.env.DB3_NAME,
+    ssl: {
+        "rejectUnauthorized": true
+    }
+});
+
+const datos = async (my_query) => {
+	return new Promise((resolve, reject) => {
+		db_local.query(my_query, (error, results) => {
+			if (error) {
+                // resolve(error)
+                resolve('error')
+                console.log(error);
+				reject(error);
+			} else {
+				resolve(results); // El resolve seria igual al return, pero es para funcion async
+			}
+		});
+	});
+};
 
 // ATENCION: Aparentemente los metodos de .connect y .end()/.destroy() ya no se usan, en su lugar solo se usa el .query() directamente
 
@@ -39,5 +66,7 @@ const db_real = mysql.createConnection({
 
 module.exports = {
     db_local: db_local,
-    db_real: db_real
+    db_real: db_real,
+    db_proyecto: db_proyecto,
+    datos: datos
 };

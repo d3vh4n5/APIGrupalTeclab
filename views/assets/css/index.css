@@ -38,6 +38,9 @@ a{
 a:hover{
     color: tomato;
 }
+.github{
+    font-size: 2rem;
+}
 .logosContainer{
     display: flex;
     justify-content: space-around;
