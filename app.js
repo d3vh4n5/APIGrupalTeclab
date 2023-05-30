@@ -40,10 +40,6 @@ app.use(require('./routes/notas'));
 app.use(require('./routes/alumnos'));
 
 
-//endpoints de pruebas, ignorenlos
-app.use(require('./routes/productos'));
-// app.use(require('./routes/contactos'));
-
 /* Fin de los middlewares de rutas*/
 
 

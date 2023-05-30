@@ -15,6 +15,7 @@ const db_real = mysql.createConnection({
 });
 
 
+// ATENCION: Aparentemente los metodos de .connect y .end()/.destroy() ya no se usan, en su lugar solo se usa el .query() directamente
 
 //Con el metodo .connect() establecemos la conexión a la base de datos
 

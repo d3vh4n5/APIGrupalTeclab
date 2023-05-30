@@ -5,15 +5,6 @@ const { db_local, db_real } = require('../db');
 
 const connection = db_local;
 
-  // Conectar a la base de datos
-    connection.connect((err) => {
-    if (err) {
-        console.error('Error de conexión a la base de datos: ', err);
-    } else {
-        console.log('Conexión exitosa a la base de datos');
-    }
-});
-
 //Funcion reutlizable para obtener todos los recursos y por paginacion tambien
 async function obtenerRecursos(req, res) {
     try {
