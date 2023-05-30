@@ -74,11 +74,12 @@ router.put('/notas/:id', async (req, res) =>{
     }
 })
 
-router.delete('/notas/:id', (req,res)=>{
-    let id = req.params.id;
-	// res.send(`Has eliminado correctamente a ${id}`)
-    res.send('Este endpoint no posee un metodo delete')
-})
+// El proyecto no exigía método delete, solo lo hice para aprender
+// router.delete('/notas/:id', (req,res)=>{
+//     let id = req.params.id;
+// 	// res.send(`Has eliminado correctamente a ${id}`)
+//     res.send('Este endpoint no posee un metodo delete')
+// })
 
 
 

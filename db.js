@@ -17,6 +17,16 @@ const db_real = mysql.createConnection({
     port: process.env.DB2_PORT
 });
 
+const db_proyecto = mysql.createConnection({
+    host: process.env.DB3_HOST,
+    user: process.env.DB3_USER,
+    password: process.env.DB3_PASS,
+    database: process.env.DB3_NAME,
+    ssl: {
+        "rejectUnauthorized": true
+    }
+});
+
 const datos = async (my_query) => {
 	return new Promise((resolve, reject) => {
 		db_local.query(my_query, (error, results) => {
@@ -57,5 +67,6 @@ const datos = async (my_query) => {
 module.exports = {
     db_local: db_local,
     db_real: db_real,
+    db_proyecto: db_proyecto,
     datos: datos
 };
