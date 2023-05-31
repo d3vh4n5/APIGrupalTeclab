@@ -8,7 +8,7 @@ router.get('/notas', async (req, res) => {
 	const page = +req.query.page; //tomo las variables despies del ? de la url
 	const pageSize = +req.query.pageSize;
     try{
-        let notas = await datos('SELECT * FROM notas_informes')
+        let notas = await datos('SELECT * FROM notas_informe')
         const profesores = await datos('SELECT * FROM profesores')
         const alumnos = await datos('SELECT * FROM alumnos')
         const cuatrimestres = await datos('SELECT * FROM cuatrimestres')
@@ -30,10 +30,10 @@ router.get('/notas', async (req, res) => {
                 const start = (page - 1) * pageSize;
                 const end = start + pageSize;
                 console.log('Ejecutado método get paginado de notas');
-                res.json(notas.slice(start, end));
+                res.status(200).json(notas.slice(start, end));
             } else {
                 console.log('Ejecutado método get de notas');
-                res.json(notas)
+                res.status(200).json(notas)
             }
         }
     } catch (error){
@@ -45,13 +45,17 @@ router.get('/notas', async (req, res) => {
 router.get('/notas/:id', async (req,res)=>{
 	let id = req.params.id
     try{
-        
-        let notas = await datos(`SELECT * FROM notas WHERE id=${id}`)
+        let notas = await datos(`SELECT * FROM notas_informe WHERE id_informe=${id}`)
+        notas[0].profesor = await datos(`SELECT * FROM profesores WHERE id_profesor=${notas[0].profesor}`)
+        notas[0].alumno = await datos(`SELECT * FROM alumnos WHERE id_alumno=${notas[0].alumno}`)
+        notas[0].cuatrimestre = await datos(`SELECT * FROM cuatrimestres WHERE id_cuatrimestre=${notas[0].cuatrimestre}`)
+        notas[0].materia = await datos(`SELECT * FROM materias WHERE id_materia=${notas[0].materia}`)
+        notas[0].curso = await datos(`SELECT * FROM cursos WHERE id_curso=${notas[0].curso}`)
         console.log('Se consultó por la nota: ',notas);
         if (notas.length === 0 || notas === 'error'){ 
             return  res.status(404).send('Hubo un error, o el recurso no existe')
         } else{
-            res.json(notas.find( p => p.id === + id)) //Busca donde combina el parametro id, con el id de los objetos en notas
+            res.status(200).json(notas.find( p => p.id_informe === + id)) //Busca donde combina el parametro id, con el id de los objetos en notas
         }
     } catch (error){
         console.error(error);
@@ -60,30 +64,26 @@ router.get('/notas/:id', async (req,res)=>{
 })
 
  router.post('/notas', (req, res) => {
-    // const nuevaNota = req.body; // Obtener los datos enviados por el cliente en la solicitud POST
-    // console.log(nuevaNota);
-    // res.send(`Sacaste un: ${nuevaNota.valor} en ${nuevaNota.materia} con ${nuevaNota.profesor}`); // Enviar una respuesta al cliente
-    
+    try{
 
-    // db_local.connect( error=>{ 
-    //     if (error) {throw error}
-    // })
-    
-    let {valor, materia, alumno, profesor} = req.body;
-    let consulta = `INSERT INTO notas VALUES ('default', '${valor}','${materia}','${alumno}','${profesor}')`;
-    
-    db_local.query(consulta, (error, results) =>{
-        if (error) {throw error}
-        else {
-            console.log(results);
-            console.log('Inserción correcta');
-            res.send('Inserción correcta')
-        }
-    })
-    // db_local.end()
+        let {año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
+        let consulta = `INSERT INTO notas_informe VALUES ('default', '${año}','${nota}', ${profesor.id_profesor}, '${alumno.id_alumno}',${cuatrimestre.id_cuatrimestre}, ${materia.id_materia}, ${curso.id_curso})`;
+        
+        db_local.query(consulta, (error, results) =>{
+            if (error) {throw error}
+            else {
+                console.log(results);
+                console.log('Inserción correcta');
+                res.status(204).send('Inserción correcta')
+            }
+        })
+    } catch (error){
+        console.log(error);
+        res.status(500).send('Hubo un error en el servidor')
+    }
 });
 
-/* Solo falta metodo put, y luego aprender el manejo de la db */
+/* Solo falta metodo put */
 
 router.put('/notas/:id', async (req, res) =>{
     try {

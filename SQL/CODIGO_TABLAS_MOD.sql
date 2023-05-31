@@ -51,7 +51,7 @@ rol int,
 foreign key(rol) references roles(id_rol)
 );
 
-CREATE TABLE notas_informes (
+CREATE TABLE notas_informe (
   id_informe int AUTO_INCREMENT PRIMARY KEY,
   año VARCHAR(5) NOT NULL,
 nota float NOT NULL,
