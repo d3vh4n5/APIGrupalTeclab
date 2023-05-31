@@ -2,38 +2,61 @@
 
 const express = require('express');
 const router = express.Router()
-const notas = require('../fake/notas')
 const { db_local, db_real, datos } = require('../db');
 
 router.get('/notas', async (req, res) => {
 	const page = +req.query.page; //tomo las variables despies del ? de la url
 	const pageSize = +req.query.pageSize;
-	let notas = await datos('SELECT * FROM notas')
-	if (notas === 'error'){ 
-		return  res.status(404).send('Hubo un error')
-	} else{
-
-		if (page && pageSize) {
-			const start = (page - 1) * pageSize;
-			const end = start + pageSize;
-			console.log('Ejecutado método get paginado de notas');
-			res.json(notas.slice(start, end));
-		} else {
-			console.log('Ejecutado método get de notas');
-			res.json(notas)
-		}
-	}
+    try{
+        let notas = await datos('SELECT * FROM notas_informes')
+        const profesores = await datos('SELECT * FROM profesores')
+        const alumnos = await datos('SELECT * FROM alumnos')
+        const cuatrimestres = await datos('SELECT * FROM cuatrimestres')
+        const materias = await datos('SELECT * FROM materias')
+        const cursos = await datos('SELECT * FROM cursos')
+        if (notas === 'error'){ 
+            return  res.status(404).send('Hubo un error')
+        } else{
+            for (nota of notas){
+                nota.profesor = profesores.find( p => p.id_profesor == nota.profesor)
+                nota.profesor.materia = materias.find( m => m.id_materia == nota.profesor.materia)
+                nota.alumno = alumnos.find( p => p.id_alumno == nota.alumno)
+                nota.alumno.curso = cursos.find(c => c.id_curso == nota.alumno.curso)
+                nota.cuatrimestre = cuatrimestres.find( p => p.id_cuetrimestre == nota.cuetrimestre)
+                nota.materia = materias.find( p => p.id_materia == nota.materia)
+                nota.curso = cursos.find( p => p.id_curso == nota.curso)
+            }
+            if (page && pageSize) {
+                const start = (page - 1) * pageSize;
+                const end = start + pageSize;
+                console.log('Ejecutado método get paginado de notas');
+                res.json(notas.slice(start, end));
+            } else {
+                console.log('Ejecutado método get de notas');
+                res.json(notas)
+            }
+        }
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Hubo un error en el servidor');
+    }
 })
 
 router.get('/notas/:id', async (req,res)=>{
 	let id = req.params.id
-	let notas = await datos(`SELECT * FROM notas WHERE id=${id}`)
-	console.log('Se consultó por la nota: ',notas);
-	if (notas.length === 0 || notas === 'error'){ 
-		return  res.status(404).send('Hubo un error, o el recurso no existe')
-	} else{
-    	res.json(notas.find( p => p.id === + id)) //Busca donde combina el parametro id, con el id de los objetos en notas
-	}
+    try{
+        
+        let notas = await datos(`SELECT * FROM notas WHERE id=${id}`)
+        console.log('Se consultó por la nota: ',notas);
+        if (notas.length === 0 || notas === 'error'){ 
+            return  res.status(404).send('Hubo un error, o el recurso no existe')
+        } else{
+            res.json(notas.find( p => p.id === + id)) //Busca donde combina el parametro id, con el id de los objetos en notas
+        }
+    } catch (error){
+        console.error(error);
+        res.status(500).send('Hubo un error en el servidor');
+    }
 })
 
  router.post('/notas', (req, res) => {

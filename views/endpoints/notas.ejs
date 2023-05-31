@@ -22,13 +22,41 @@
         <blockquote class="quoteCode">
             <pre>
                 <code>
-const nuevaNota = {
-    id: "default",
-    valor: 8,
-    materia: 'historia',
-    alumno: 'Juan',
-    profesor: 'Einstein'
-};
+{
+    "id_informe": 1,
+    "año": "2021",
+    "nota": 2.5,
+    "profesor": {
+        "id_profesor": 1,
+        "nombre_profesor": "Juan",
+        "apellido_profesor": "Perez",
+        "materia": {
+            "id_materia": 1,
+            "nombre_materia": "Matematicas"
+        }
+    },
+    "alumno": {
+        "id_alumno": 1,
+        "nombre_alumno": "Carolina",
+        "apellido_alumno": "Marquesin",
+        "curso": {
+            "id_curso": 1,
+            "nombre_cursos": "Primero A"
+        }
+    },
+    "cuatrimestre": {
+        "id_cuatrimestre": 1,
+        "nombre_cuatri": "Primer Cuatrimestre"
+    },
+    "materia": {
+        "id_materia": 1,
+        "nombre_materia": "Matematicas"
+    },
+    "curso": {
+        "id_curso": 1,
+        "nombre_cursos": "Primero A"
+    }
+}
                 </code>
             </pre>
         </blockquote>

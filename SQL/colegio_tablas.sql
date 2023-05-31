@@ -1,65 +1,69 @@
+CREATE TABLE notas (
+id_nota SERIAL PRIMARY KEY,
+nombre_nota VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE cuatrimestres (
-id_cuatrimestre int AUTO_INCREMENT PRIMARY KEY,
-nombre_cuatri VARCHAR(255) NOT NULL
+id_cuatrimestre SERIAL PRIMARY KEY,
+nombre_cuatri VARCHAR(255) NOT NULL,
 );
 
 CREATE TABLE materias (
-  id_materia int AUTO_INCREMENT PRIMARY KEY,
-  nombre_materia VARCHAR(255) NOT NULL
+id_materia SERIAL PRIMARY KEY,
+nombre_materia VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE roles (
-id_rol int AUTO_INCREMENT PRIMARY KEY,
+id_rol SERIAL PRIMARY KEY,
 nombre_rol VARCHAR (255) NOT NULL
 );
 
 CREATE TABLE cursos (
-id_curso int AUTO_INCREMENT PRIMARY KEY,
+id_curso SERIAL PRIMARY KEY,
 nombre_cursos VARCHAR(255) NOT NULL
 );
 
-
 CREATE TABLE alumnos (
-id_alumno int AUTO_INCREMENT PRIMARY KEY,
+id_alumno SERIAL PRIMARY KEY,
 nombre_alumno VARCHAR(255) NOT NULL,
 apellido_alumno VARCHAR(255) NOT NULL,
-curso int,
-FOREIGN KEY (curso) references cursos(id_curso)
+curso bigint,
+foreign key (curso) references cursos(id_curso)
 );
 
 CREATE TABLE materia_alumno(
-id_alumno_materia int AUTO_INCREMENT PRIMARY KEY,
-alumno int NOT NULL,
-materia int NOT NULL,
+id_alumno_materia SERIAL PRIMARY KEY,
+alumno bigint NOT NULLL,
+materia bigint NOT NULL,
 foreign key (alumno) references alumnos(id_alumno),
 foreign key (materia) references materias(id_materia)
 );
 
 CREATE TABLE profesores(
-id_profesor int AUTO_INCREMENT PRIMARY KEY,
+id_profesor SERIAL PRIMARY KEY,
 nombre_profesor VARCHAR(255) NOT NULL,
 apellido_profesor VARCHAR(255) NOT NULL,
-materia int,
+materia bigint,
 foreign key(materia) references materias(id_materia)
 );
 
 CREATE TABLE usuarios(
-id_usuarios int AUTO_INCREMENT PRIMARY KEY,
+id_usuarios SERIAL PRIMARY KEY,
 nombre_usuario VARCHAR(255) NOT NULL,
 apellido_usuario VARCHAR(255) NOT NULL,
-rol int,
+rol bigint,
 foreign key(rol) references roles(id_rol)
 );
 
 CREATE TABLE notas_informes (
-  id_informe int AUTO_INCREMENT PRIMARY KEY,
-  año VARCHAR(5) NOT NULL,
+id_informe SERIAL PRIMARY KEY,
+año VARCHAR(5) NOT NULL,
 nota float NOT NULL,
-profesor int NOT NULL,
-alumno int NOT NULL,
-cuatrimestre int NOT NULL,
-materia int NOT NULL,
-curso int NOT NULL,
+profesor bigint NOT NULL,
+alumno bigint NOT NULL,
+cuatrimestre bigint NOT NULL,
+materia bigint NOT NULL,
+curso bigint NOT NULL,
 foreign key (profesor) references profesores(id_profesor),
 foreign key (alumno) references alumnos(id_alumno),
 foreign key(cuatrimestre) references cuatrimestres(id_cuatrimestre),
@@ -74,7 +78,6 @@ INSERT INTO cursos VALUES
 (default,'Cuarto A'),
 (default,'Quinto A');
 
-
 INSERT INTO materias VALUES
 (default,'Matematicas'),
 (default,'Ingles' ),
@@ -84,14 +87,10 @@ INSERT INTO materias VALUES
 (default,'Historia'),
 (default,'Biología');
 
-
 INSERT INTO roles VALUES
 (default,'Administrador'),
 (default,'Secretaria' ),
 (default,'Profesor');
-
-
-
 
 INSERT INTO profesores VALUES
 (default,'Juan','Perez',1),
@@ -135,7 +134,7 @@ INSERT INTO alumnos VALUES
 (default,'Rossi','Planes',5),
 (default,'Gustavo','Schamne',5),
 (default,'Gustavo','Benitez',5),
-(default,'Elizabeth','Beron',5);
+(default,'Elizabeth','Beron',5),
 
 INSERT INTO materia_alumno VALUES
 (default,1,1),
@@ -341,3 +340,5 @@ INSERT INTO materia_alumno VALUES
 (default,29,5),
 (default,29,6),
 (default,29,7);
+
+
