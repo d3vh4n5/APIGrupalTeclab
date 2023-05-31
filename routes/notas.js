@@ -67,7 +67,7 @@ router.get('/notas/:id', async (req,res)=>{
     try{
 
         let {id_informe, año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
-        let consulta = `INSERT INTO notas_informe VALUES ('${id_informe}', '${año}','${nota}', ${profesor.id_profesor}, '${alumno.id_alumno}',${cuatrimestre.id_cuatrimestre}, ${materia.id_materia}, ${curso.id_curso})`;
+        let consulta = `INSERT INTO notas_informe VALUES ('0', '${año}','${nota}', ${profesor.id_profesor}, '${alumno.id_alumno}',${cuatrimestre.id_cuatrimestre}, ${materia.id_materia}, ${curso.id_curso})`;
         
         db_local.query(consulta, (error, results) =>{
             if (error) {throw error}
