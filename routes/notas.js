@@ -65,10 +65,10 @@ router.get('/notas/:id', async (req,res)=>{
 
  router.post('/notas', (req, res) => {
     try{
-
         let {id_informe, año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
+        // Cuando en la DB la primary key es de tipo serial, siempre hay que insertarla con el valor cero "0"
+        // no funciona mando el 'default'
         let consulta = `INSERT INTO notas_informe VALUES ('0', '${año}','${nota}', ${profesor.id_profesor}, '${alumno.id_alumno}',${cuatrimestre.id_cuatrimestre}, ${materia.id_materia}, ${curso.id_curso})`;
-        
         db_local.query(consulta, (error, results) =>{
             if (error) {throw error}
             else {
