@@ -85,13 +85,18 @@ router.get('/notas/:id', async (req,res)=>{
 
 /* Solo falta metodo put */
 
-router.put('/notas/:id', async (req, res) =>{
+router.put('/notas', async (req, res) =>{
     try {
-        let id= req.params.id;
-        let {valor, materia, profesor} = req.body;
-        res.send(`Actualizaste un: ${valor} en ${materia} con ${profesor}`); // Enviar una respuesta al cliente
-        // let response = await db.User.update({}) se me corto la luz, despues sigo
-        // https://www.youtube.com/watch?v=77qB3a3P8Ag
+        let {id_informe, año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
+        let consulta = `UPDATE notas_informe SET año='${año}',nota='${nota}', profesor=${profesor.id_profesor}, alumno='${alumno.id_alumno}', cuatrimestre=${cuatrimestre.id_cuatrimestre}, materia=${materia.id_materia}, curso=${curso.id_curso} WHERE id_informe=${id_informe}`;
+        db_local.query(consulta, (error, results) =>{
+            if (error) {throw error}
+            else {
+                console.log(results);
+                console.log('Actualizacion correcta');
+                res.status(204).send('Actualizacion correcta')
+            }
+        })
     } catch (error) {
         res.status(400).send('No se pudo actualizar')
     }
