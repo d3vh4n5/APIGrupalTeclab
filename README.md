@@ -35,14 +35,14 @@ Se recomiendo usar nodemon para hacer las pruebas, se puede instalar usando el s
 npm install -g nodemon
 ```
 
-## Para ejecutar el server con Express (teniendo nodemon)
+### Para ejecutar el server con Express (teniendo nodemon)
 
 ```bash
  npm run dev
 ```
 
 
-## Para ejecutar el server con Express (sin nodemon)
+### Para ejecutar el server con Express (sin nodemon)
 
 ```bash
  npm run start
