@@ -83,7 +83,6 @@ router.get('/notas/:id', async (req,res)=>{
     }
 });
 
-/* Solo falta metodo put */
 
 router.put('/notas', async (req, res) =>{
     try {
