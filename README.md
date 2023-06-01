@@ -1,10 +1,10 @@
 # APIGrupalTeclab
-Esta es una API que desarrollaremos en grupo entre alumnos de teclab, como contenido extracurricular de la materia "Integraciones Web"
+Esta es una API que desarrollaremos en grupo entre alumnos de teclab, como contenido extracurricular de la materia "Integraciones Web".
 
 
 ## Para instalar las dependencias
 
-Al clonar el repositorio se ejecuta el siguiente comando que instalará todas las dependencias
+Al clonar el repositorio se ejecuta el siguiente comando que instalará todas las dependencias.
 
 ```bash
 npm install
