@@ -23,7 +23,7 @@ async function obtenerRecursos(req, res) {
             resolve(result);
             }
         });
-        });
+    });
 
         if (resultadoConsulta.length === 0) {
         res.status(404).json({ error: 'No se encontraron recursos' });
@@ -100,8 +100,8 @@ async function obtenerRecursos(req, res) {
 //Funcion reutlizable para Obtener recurso mediante ID
 async function obtenerRecursoId(req, res) {
     try {
-    const { id } = req.params;
-    const query = `SELECT * FROM materias WHERE id = '${id}'`;
+    const { id_materia } = req.params;
+    const query = `SELECT * FROM materias WHERE id = '${id_materia}'`;
 
     const result = await new Promise((resolve, reject) => {
         connection.query(query, (err, result) => {
@@ -176,9 +176,9 @@ async function crearRecurso(req, res) {
 //Función reutilizable para actualizar un registro
 async function actualizarRecurso(req, res) {
     try {
-    const id = req.params.id;
+    const id = req.params.id_materia;
     const { nombre_materia } = req.body;
-    const query = 'UPDATE materias SET nombre_materia = ? WHERE id = ?';
+    const query = 'UPDATE materias SET nombre_materia = ? WHERE id_materia = ?';
     await connection.query(query, [nombre_materia, id]);
 
     res.send('Recurso actualizado correctamente');
@@ -206,8 +206,8 @@ async function actualizarRecurso(req, res) {
 // Función reutilizable para eliminar el recurso
 async function eliminarRecurso(req, res) {
     try {
-    const id = req.params.id;
-    const query = 'DELETE FROM materias WHERE id = ?';
+    const id = req.params.id_materia;
+    const query = 'DELETE FROM materias WHERE id_materia = ?';
     await connection.query(query, [id]);
 
     res.json({ message: 'Recurso eliminado correctamente' });
