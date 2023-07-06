@@ -1,82 +1,116 @@
-CREATE TABLE notas (
-id_nota SERIAL PRIMARY KEY,
-nombre_nota VARCHAR(255) NOT NULL
-);
+/*
+    @authors:          Gustavo, Mateo 
+    @modifications:    Juan
+    Last change:       06/07/2023  by  Juan
+*/
+
+
+-- Tablas independientes
 
 CREATE TABLE cuatrimestres (
-id_cuatrimestre SERIAL PRIMARY KEY,
-nombre_cuatri VARCHAR(255) NOT NULL,
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE materias (
-id_materia SERIAL PRIMARY KEY,
-nombre_materia VARCHAR(255) NOT NULL
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE roles (
-id_rol SERIAL PRIMARY KEY,
-nombre_rol VARCHAR (255) NOT NULL
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR (255) NOT NULL
 );
 
 CREATE TABLE cursos (
-id_curso SERIAL PRIMARY KEY,
-nombre_cursos VARCHAR(255) NOT NULL
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(255) NOT NULL
+);
+
+-- Tablas con relaciones
+
+CREATE TABLE usuarios(
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre_usuario VARCHAR(30) NOT NULL,
+contrasenia VARCHAR(100) NOT NULL,
+rol INT NOT NULL,
+foreign key(rol) references roles(id)
 );
 
 CREATE TABLE alumnos (
-id_alumno SERIAL PRIMARY KEY,
-nombre_alumno VARCHAR(255) NOT NULL,
-apellido_alumno VARCHAR(255) NOT NULL,
-curso bigint,
-foreign key (curso) references cursos(id_curso)
-);
-
-CREATE TABLE materia_alumno(
-id_alumno_materia SERIAL PRIMARY KEY,
-alumno bigint NOT NULLL,
-materia bigint NOT NULL,
-foreign key (alumno) references alumnos(id_alumno),
-foreign key (materia) references materias(id_materia)
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(55) NOT NULL,
+apellido VARCHAR(55) NOT NULL,
+dni VARCHAR(9) NOT NULL,
+curso INT NULL,
+usuario_relacionado INT(100) NULL,
+foreign key (curso) references cursos(id),
+foreign key (usuario_relacionado) references usuarios(id)
 );
 
 CREATE TABLE profesores(
-id_profesor SERIAL PRIMARY KEY,
-nombre_profesor VARCHAR(255) NOT NULL,
-apellido_profesor VARCHAR(255) NOT NULL,
-materia bigint,
-foreign key(materia) references materias(id_materia)
+id INT AUTO_INCREMENT PRIMARY KEY,
+nombre VARCHAR(55) NOT NULL,
+apellido VARCHAR(55) NOT NULL,
+dni VARCHAR(9) NOT NULL,
+materia INT NOT NULL,
+usuario_relacionado INT(100) NULL,
+foreign key(materia) references materias(id),
+foreign key (usuario_relacionado) references usuarios(id)
 );
 
-CREATE TABLE usuarios(
-id_usuarios SERIAL PRIMARY KEY,
-nombre_usuario VARCHAR(255) NOT NULL,
-apellido_usuario VARCHAR(255) NOT NULL,
-rol bigint,
-foreign key(rol) references roles(id_rol)
+CREATE TABLE secretarias(
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(55) NOT NULL,
+    apellido VARCHAR(55) NOT NULL,
+    dni VARCHAR(9) NOT NULL,
+    usuario_relacionado INT(100) NULL,
+    foreign key (usuario_relacionado) references usuarios(id)
 );
 
-CREATE TABLE notas_informe (
-id_informe SERIAL PRIMARY KEY,
+CREATE TABLE administradores(
+    id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nombre VARCHAR(55) NOT NULL,
+    apellido VARCHAR(55) NOT NULL,
+    dni VARCHAR(9) NOT NULL,
+    usuario_relacionado INT(100) NULL,
+    foreign key (usuario_relacionado) references usuarios(id)
+);
+
+CREATE TABLE materias_alumnos(
+id_alumno_materia INT AUTO_INCREMENT PRIMARY KEY,
+alumno INT NOT NULL,
+materia INT NOT NULL,
+foreign key (alumno) references alumnos(id),
+foreign key (materia) references materias(id)
+);
+
+CREATE TABLE notas (
+id INT AUTO_INCREMENT PRIMARY KEY,
 año VARCHAR(5) NOT NULL,
 nota float NOT NULL,
-profesor bigint NOT NULL,
-alumno bigint NOT NULL,
-cuatrimestre bigint NOT NULL,
-materia bigint NOT NULL,
-curso bigint NOT NULL,
-foreign key (profesor) references profesores(id_profesor),
-foreign key (alumno) references alumnos(id_alumno),
-foreign key(cuatrimestre) references cuatrimestres(id_cuatrimestre),
-foreign key(materia) references materias(id_materia),
-foreign key(curso) references cursos(id_curso)
+profesor INT NOT NULL,
+alumno INT NOT NULL,
+cuatrimestre INT NOT NULL,
+materia INT NOT NULL,
+curso INT NOT NULL,
+foreign key (profesor) references profesores(id),
+foreign key (alumno) references alumnos(id),
+foreign key(cuatrimestre) references cuatrimestres(id),
+foreign key(materia) references materias(id),
+foreign key(curso) references cursos(id)
 );
+
+-- ==== Inserciones ====
+
+-- Inserciones a tablas sin relación
 
 INSERT INTO cursos VALUES
 (default,'Primero A'),
 (default,'Segundo A' ),
 (default,'Tercero A'),
 (default,'Cuarto A'),
-(default,'Quinto A');
+(default,'QuINTo A');
 
 INSERT INTO materias VALUES
 (default,'Matematicas'),
@@ -92,51 +126,69 @@ INSERT INTO roles VALUES
 (default,'Secretaria' ),
 (default,'Profesor');
 
-INSERT INTO profesores VALUES
-(default,'Juan','Perez',1),
-(default,'Pedro','Gomez',2),
-(default,'Juana','Fernandez',3),
-(default,'Lucía','Galán',4),
-(default,'Julio','Iglesias',5),
-(default,'Teresa','Gutierrez',6),
-(default,'Alberto','Gonzalez',7);
-
 INSERT INTO cuatrimestres VALUES
 (default,'Primer Cuatrimestre'),
 (default,'Segundo Cuatrimestre');
 
-INSERT INTO alumnos VALUES
-(default,'Carolina','Marquesin',1),
-(default,'Juan','Ruarte',1),
-(default,'Matias','Carrizo',1),
-(default,'Hernan','Redondo',1),
-(default,'Waldo','Velasquez',1),
-(default,'Sergio','Armas',2),
-(default,'Miguel','Juarez',2),
-(default,'Lucas','Fiore',2),
-(default,'Adriana','Gonzalez',2),
-(default,'Vanesa','Veron',2),
-(default,'Maria','Duarte',2),
-(default,'Maira','Narvaez',3),
-(default,'Teresa','Guillen',3),
-(default,'Martin','San',3),
-(default,'Nestor','Gomez',3),
-(default,'Cabrera','Gavilan',3),
-(default,'Enrique','Kracher',3),
-(default,'Miguel','Barrios',4),
-(default,'Sandra','Romero',4),
-(default,'Micaela','Michela',4),
-(default,'Carlos','Gonzalez',4),
-(default,'Oscar','Carvajal',4),
-(default,'Luciano','Dugour',4),
-(default,'Cintia','Insaurralde',5),
-(default,'Javier','Dauo',5),
-(default,'Rossi','Planes',5),
-(default,'Gustavo','Schamne',5),
-(default,'Gustavo','Benitez',5),
-(default,'Elizabeth','Beron',5),
+-- Inserciones a tablas con relaciones
 
-INSERT INTO materia_alumno VALUES
+INSERT INTO profesores VALUES
+(default, 'Juan', 'Perez', '123456789', 1, null),
+(default, 'Pedro', 'Gomez', '987654321', 2, null),
+(default, 'Juana', 'Fernandez', '246813579', 3, null),
+(default, 'Lucía', 'Galán', '135792468', 4, null),
+(default, 'Julio', 'Iglesias', '864209753', 5, null),
+(default, 'Teresa', 'Gutierrez', '357924680', 6, null),
+(default, 'Alberto', 'Gonzalez', '802468135', 7, null);
+
+INSERT INTO alumnos VALUES
+(default, 'Carolina', 'Marquesin', '123456789', 1, null),
+(default, 'Juan', 'Ruarte', '987654321', 1, null),
+(default, 'Matias', 'Carrizo', '246813579', 1, null),
+(default, 'Hernan', 'Redondo', '135792468', 1, null),
+(default, 'Waldo', 'Velasquez', '864209753', 1, null),
+(default, 'Sergio', 'Armas', '357924680', 2, null),
+(default, 'Miguel', 'Juarez', '802468135', 2, null),
+(default, 'Lucas', 'Fiore', '123456789', 2, null),
+(default, 'Adriana', 'Gonzalez', '987654321', 2, null),
+(default, 'Vanesa', 'Veron', '246813579', 2, null),
+(default, 'Maria', 'Duarte', '135792468', 2, null),
+(default, 'Maira', 'Narvaez', '864209753', 3, null),
+(default, 'Teresa', 'Guillen', '357924680', 3, null),
+(default, 'Martin', 'San', '802468135', 3, null),
+(default, 'Nestor', 'Gomez', '123456789', 3, null),
+(default, 'Cabrera', 'Gavilan', '987654321', 3, null),
+(default, 'Enrique', 'Kracher', '246813579', 3, null),
+(default, 'Miguel', 'Barrios', '135792468', 4, null),
+(default, 'Sandra', 'Romero', '864209753', 4, null),
+(default, 'Micaela', 'Michela', '357924680', 4, null),
+(default, 'Carlos', 'Gonzalez', '802468135', 4, null),
+(default, 'Oscar', 'Carvajal', '123456789', 4, null),
+(default, 'Luciano', 'Dugour', '987654321', 4, null),
+(default, 'CINTia', 'Insaurralde', '246813579', 5, null),
+(default, 'Javier', 'Dauo', '135792468', 5, null),
+(default, 'Rossi', 'Planes', '864209753', 5, null),
+(default, 'Gustavo', 'Schamne', '357924680', 5, null),
+(default, 'Gustavo', 'Benitez', '802468135', 5, null),
+(default, 'Elizabeth', 'Beron', '123456789', 5, null);
+
+INSERT INTO usuarios VALUES
+(default, 'LeoMessirve', '', 1),
+(default, 'Bradsadito', '', 1),
+(default, 'soylaviuda', '', 2),
+(default, 'AleDadd', '', 2),
+(default, 'zaz88', '', 2);
+
+INSERT INTO secretarias VALUES
+(default, 'Scarlet', 'Johansson', 123123132, 3),
+(default, 'Alexandra', 'Daddario', 120606900, 4),
+(default, 'Zazie', 'Beetz', 648132697, 5);
+
+INSERT INTO administradores VALUES
+(default, 'Brad', 'Pitt', 100200300, 2),
+(default, 'Leonel', 'Messi', 100100100, 1);
+
+INSERT INTO materias_alumnos VALUES
 (default,1,1),
 (default,1,2),
 (default,1,3),
@@ -342,3 +394,5 @@ INSERT INTO materia_alumno VALUES
 (default,29,7);
 
 
+INSERT INTO notas VALUES
+(default, 2001, 7.54, 1, 3, 2, 7, 2)
