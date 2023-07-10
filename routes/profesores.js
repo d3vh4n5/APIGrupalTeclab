@@ -41,7 +41,7 @@ router.get('/profesores/:id', async (req,res)=>{
 	let id = req.params.id
 	try{
 		let profesores = await datos(`SELECT * FROM profesores WHERE id=${id}`)
-		let mat = await datos(`SELECT * FROM materias WHERE id_materia=${profesores[0].materia}`)
+		let mat = await datos(`SELECT * FROM materias WHERE id=${profesores[0].materia}`)
 		profesores[0].materia = mat[0]
 		console.log('Se consultó por el profesor: ',profesores);
 		if (profesores.length === 0 || profesores === 'error'){ 
