@@ -13,7 +13,7 @@ router.get('/profesores', async (req, res) => {
 		let materias = await datos('SELECT * FROM materias')
 		
 		for (let profe of profesores){
-			mat = materias.find( m => m.id_materia == profe.materia);
+			mat = materias.find( m => m.id == profe.materia);
 			profe.materia = mat;
 		}
 		
@@ -37,17 +37,17 @@ router.get('/profesores', async (req, res) => {
 	}
 })
 
-router.get('/profesores/:id_profesor', async (req,res)=>{
-	let id_profesor = req.params.id_profesor
+router.get('/profesores/:id', async (req,res)=>{
+	let id = req.params.id
 	try{
-		let profesores = await datos(`SELECT * FROM profesores WHERE id_profesor=${id_profesor}`)
+		let profesores = await datos(`SELECT * FROM profesores WHERE id=${id}`)
 		let mat = await datos(`SELECT * FROM materias WHERE id_materia=${profesores[0].materia}`)
 		profesores[0].materia = mat[0]
 		console.log('Se consultó por el profesor: ',profesores);
 		if (profesores.length === 0 || profesores === 'error'){ 
 			return  res.status(404).send('Hubo un error, o el recurso no existe')
 		} else{
-			res.json(profesores.find( p => p.id_profesor === + id_profesor)) //Busca donde combina el parametro id_profesor, con el id_profesor de los objetos en profesores
+			res.json(profesores.find( p => p.id === + id)) //Busca donde combina el parametro id, con el id de los objetos en profesores
 		}
 	} catch (error){
 		console.error(error);

@@ -395,4 +395,6 @@ INSERT INTO materias_alumnos VALUES
 
 
 INSERT INTO notas VALUES
-(default, 2001, 7.54, 1, 3, 2, 7, 2)
+(default, 2001, 7.54, 1, 3, 2, 7, 2),
+(default, 2021, 2.77, 1, 2, 1, 3, 1),
+(default, 2023, 8.88, 1, 1, 2, 4, 3);
