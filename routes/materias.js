@@ -101,10 +101,10 @@ async function obtenerRecursos(req, res) {
 async function obtenerRecursoId(req, res) {
     try {
     const { id_materia } = req.params;
-    const query = `SELECT * FROM materias WHERE id = '${id_materia}'`;
+    const query = `SELECT * FROM materias WHERE id = ?`;
 
     const result = await new Promise((resolve, reject) => {
-        connection.query(query, (err, result) => {
+        connection.query(query, [id_materia], (err, result) => {
         if (err) {
             console.log(err);
             reject(err);
