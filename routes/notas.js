@@ -8,7 +8,7 @@ router.get('/notas', async (req, res) => {
 	const page = +req.query.page; //tomo las variables despies del ? de la url
 	const pageSize = +req.query.pageSize;
     try{
-        let notas = await datos('SELECT * FROM notas_informe')
+        let notas = await datos('SELECT * FROM notas')
         const profesores = await datos('SELECT * FROM profesores')
         const alumnos = await datos('SELECT * FROM alumnos')
         const cuatrimestres = await datos('SELECT * FROM cuatrimestres')
@@ -18,13 +18,13 @@ router.get('/notas', async (req, res) => {
             return  res.status(404).send('Hubo un error')
         } else{
             for (nota of notas){
-                nota.profesor = profesores.find( p => p.id_profesor == nota.profesor)
-                nota.profesor.materia = materias.find( m => m.id_materia == nota.profesor.materia)
-                nota.alumno = alumnos.find( p => p.id_alumno == nota.alumno)
-                nota.alumno.curso = cursos.find(c => c.id_curso == nota.alumno.curso)
-                nota.cuatrimestre = cuatrimestres.find( p => p.id_cuetrimestre == nota.cuetrimestre)
-                nota.materia = materias.find( p => p.id_materia == nota.materia)
-                nota.curso = cursos.find( p => p.id_curso == nota.curso)
+                nota.profesor = profesores.find( p => p.id == nota.profesor)
+                nota.profesor.materia = materias.find( m => m.id == nota.profesor.materia)
+                nota.alumno = alumnos.find( a => a.id == nota.alumno)
+                nota.alumno.curso = cursos.find(c => c.id == nota.alumno.curso)
+                nota.cuatrimestre = cuatrimestres.find( c => c.id == nota.cuetrimestre)
+                nota.materia = materias.find( m => m.id == nota.materia)
+                nota.curso = cursos.find( c => c.id == nota.curso)
             }
             if (page && pageSize) {
                 const start = (page - 1) * pageSize;
@@ -45,17 +45,17 @@ router.get('/notas', async (req, res) => {
 router.get('/notas/:id', async (req,res)=>{
 	let id = req.params.id
     try{
-        let notas = await datos(`SELECT * FROM notas_informe WHERE id_informe=${id}`)
-        notas[0].profesor = await datos(`SELECT * FROM profesores WHERE id_profesor=${notas[0].profesor}`)
-        notas[0].alumno = await datos(`SELECT * FROM alumnos WHERE id_alumno=${notas[0].alumno}`)
+        let notas = await datos(`SELECT * FROM notas WHERE id=${id}`)
+        notas[0].profesor = await datos(`SELECT * FROM profesores WHERE id=${notas[0].profesor}`)
+        notas[0].alumno = await datos(`SELECT * FROM alumnos WHERE id=${notas[0].alumno}`)
         notas[0].cuatrimestre = await datos(`SELECT * FROM cuatrimestres WHERE id_cuatrimestre=${notas[0].cuatrimestre}`)
-        notas[0].materia = await datos(`SELECT * FROM materias WHERE id_materia=${notas[0].materia}`)
-        notas[0].curso = await datos(`SELECT * FROM cursos WHERE id_curso=${notas[0].curso}`)
+        notas[0].materia = await datos(`SELECT * FROM materias WHERE id=${notas[0].materia}`)
+        notas[0].curso = await datos(`SELECT * FROM cursos WHERE id=${notas[0].curso}`)
         console.log('Se consultó por la nota: ',notas);
         if (notas.length === 0 || notas === 'error'){ 
             return  res.status(404).send('Hubo un error, o el recurso no existe')
         } else{
-            res.status(200).json(notas.find( p => p.id_informe === + id)) //Busca donde combina el parametro id, con el id de los objetos en notas
+            res.status(200).json(notas.find( p => p.id === + id)) //Busca donde combina el parametro id, con el id de los objetos en notas
         }
     } catch (error){
         console.error(error);
@@ -65,10 +65,10 @@ router.get('/notas/:id', async (req,res)=>{
 
  router.post('/notas', (req, res) => {
     try{
-        let {id_informe, año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
+        let {id, año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
         // Cuando en la DB la primary key es de tipo serial, siempre hay que insertarla con el valor cero "0"
         // no funciona mando el 'default'
-        let consulta = `INSERT INTO notas_informe VALUES ('0', '${año}','${nota}', ${profesor.id_profesor}, '${alumno.id_alumno}',${cuatrimestre.id_cuatrimestre}, ${materia.id_materia}, ${curso.id_curso})`;
+        let consulta = `INSERT INTO notas VALUES ('0', '${año}','${nota}', ${profesor.id}, '${alumno.id}',${cuatrimestre.id_cuatrimestre}, ${materia.id}, ${curso.id})`;
         db_local.query(consulta, (error, results) =>{
             if (error) {throw error}
             else {
@@ -86,8 +86,8 @@ router.get('/notas/:id', async (req,res)=>{
 
 router.put('/notas', async (req, res) =>{
     try {
-        let {id_informe, año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
-        let consulta = `UPDATE notas_informe SET año='${año}',nota='${nota}', profesor=${profesor.id_profesor}, alumno='${alumno.id_alumno}', cuatrimestre=${cuatrimestre.id_cuatrimestre}, materia=${materia.id_materia}, curso=${curso.id_curso} WHERE id_informe=${id_informe}`;
+        let {id, año, nota, profesor, alumno, cuatrimestre, materia, curso} = req.body;
+        let consulta = `UPDATE notas SET año='${año}',nota='${nota}', profesor=${profesor.id}, alumno='${alumno.id}', cuatrimestre=${cuatrimestre.id_cuatrimestre}, materia=${materia.id}, curso=${curso.id} WHERE id=${id}`;
         db_local.query(consulta, (error, results) =>{
             if (error) {throw error}
             else {
