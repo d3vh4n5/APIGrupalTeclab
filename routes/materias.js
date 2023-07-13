@@ -100,11 +100,11 @@ async function obtenerRecursos(req, res) {
 //Funcion reutlizable para Obtener recurso mediante ID
 async function obtenerRecursoId(req, res) {
     try {
-    const { id_materia } = req.params;
-    const query = `SELECT * FROM materias WHERE id = ?`;
+    const id = req.params.id;
+    const query = `SELECT * FROM materias WHERE id = ${id}`;
 
     const result = await new Promise((resolve, reject) => {
-        connection.query(query, [id_materia], (err, result) => {
+        connection.query(query, [id], (err, result) => {
         if (err) {
             console.log(err);
             reject(err);
@@ -144,9 +144,9 @@ async function obtenerRecursoId(req, res) {
 //Funcion reutlizable para crear un nuevo registro
 async function crearRecurso(req, res) {
     try {
-    const { nombre_materia } = req.body;
-    const query = 'INSERT INTO materias (nombre_materia) VALUES (?)';
-    await connection.query(query, [nombre_materia]);
+    const { nombre} = req.body;
+    const consulta = `INSERT INTO materias VALUES ('0', '${nombre}')`;
+    await connection.query(consulta);
 
     res.status(200).json({ message: 'Recurso creado correctamente' });
     } catch (err) {
@@ -176,10 +176,10 @@ async function crearRecurso(req, res) {
 //Función reutilizable para actualizar un registro
 async function actualizarRecurso(req, res) {
     try {
-    const id = req.params.id_materia;
-    const { nombre_materia } = req.body;
-    const query = 'UPDATE materias SET nombre_materia = ? WHERE id_materia = ?';
-    await connection.query(query, [nombre_materia, id]);
+    const { id }= req.params;
+    const { nombre } = req.body;
+    const query = `UPDATE materias SET nombre='${nombre}' WHERE id=${id}`;
+    await connection.query(query);
 
     res.send('Recurso actualizado correctamente');
     } catch (err) {
@@ -206,9 +206,9 @@ async function actualizarRecurso(req, res) {
 // Función reutilizable para eliminar el recurso
 async function eliminarRecurso(req, res) {
     try {
-    const id = req.params.id_materia;
-    const query = 'DELETE FROM materias WHERE id_materia = ?';
-    await connection.query(query, [id]);
+    const { id } = req.params;
+    const query = `DELETE FROM materias WHERE id=${id}`;
+    await connection.query(query);
 
     res.json({ message: 'Recurso eliminado correctamente' });
     } catch (err) {
