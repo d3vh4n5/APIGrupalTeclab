@@ -36,6 +36,7 @@ const datos = async (my_query) => {
                 console.log(error);
 				reject(error);
 			} else {
+                console.log("datos() dice: La query se ejecutó correctamente");
 				resolve(results); // El resolve seria igual al return, pero es para funcion async
 			}
 		});
