@@ -394,3 +394,5 @@ INSERT INTO materias_alumnos VALUES
 (default,29,7);
 
 
+INSERT INTO notas VALUES
+(default, 2001, 7.54, 1, 3, 2, 7, 2)
