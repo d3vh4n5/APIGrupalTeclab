@@ -37,8 +37,10 @@ router.get('/usuarios', async (req,res)=>{
         res.status(404).send("Hubo un error inesperado, posiblemnte en la base de datos")
     }
 })
+
+
 router.post('/usuarios', async (req, res)=>{
-    const {nombre_usuario, contrasenia, rol, persona} = req.body
+    let {nombre_usuario, contrasenia, rol, persona} = req.body
     try{
         let exists = await datos(`SELECT * FROM usuarios WHERE nombre_usuario="${nombre_usuario}"`)
         // console.log(exists)
@@ -46,51 +48,51 @@ router.post('/usuarios', async (req, res)=>{
             console.error("Nombre de usuario no disponible")
             res.status(404).send("Nombre de usuario no disponible")
         } else {
-            let dbRes = await datos(`INSERT INTO usuarios VALUES (default, '${nombre_usuario}', '${contrasenia}', ${rol})`);
-            if (dbRes === 'error'){
-                console.error("Hubo un error al inserter el usuario", dbRes)
-                res.status(404).send("Hubo un error al inserter el usuario")
-            } else{
-                // console.log("Usuario insertado correctamente.")
-                // console.log("Obteniendo información...")
-                let usuario = await datos(`SELECT * FROM usuarios WHERE usuarios.nombre_usuario="${nombre_usuario}"`)
-                console.log(usuario)
-                if (usuario === 'error'){
-                    console.error("Hubo un error al inserter el usuario", usuario)
-                    res.status(404).send("Hubo un error al inserter el usuario")
-                } else{
-                    // console.log("usuario id:", usuario[0].id)
-                    let rol = await datos(`SELECT * FROM roles WHERE id="${usuario[0].rol}"`)
-                    usuario[0].rol = rol[0]
-                    // console.log("Rol del usuario:", usuario[0].rol);
-                    // console.log("user: ",usuario)
-                    switch (usuario[0].rol.nombre.toLowerCase()){
-                        case "profesor":
-                            // console.log("Todo ok")
-                            // console.log(persona.id)
-                            // console.log(usuario[0].rol)
-                            let update = await datos(`UPDATE profesores SET usuario_relacionado = ${usuario[0].id} WHERE id = ${persona.id}`)
-                            let datosPersona = await datos(`SELECT * FROM profesores WHERE id = ${persona.id}`)
-                            if (update != 'error'){
-                                usuario[0].persona = datosPersona[0]
-                                console.log("Se insertó correctamente: ", usuario)
-                                res.status(200).json(usuario)
+            //Aqui va la validación de perosna con relaed user
+            let uRol = await datos(`SELECT * FROM roles WHERE id="${rol}"`)
+            rol = uRol[0]
+            switch (rol.nombre.toLowerCase()){
+                case "profesor":
+                    let profTieneUsuario = await datos(`SELECT usuario_relacionado FROM profesores WHERE id = ${persona.id}`)
+                    // console.log(profTieneUsuario);
+                    if (profTieneUsuario[0].usuario_relacionado != null){
+                        console.log("El individuo ya tiene un usuario registrado")
+                        res.status(404).send("El individuo ya tiene un usuario registrado")
+                    } else {
+                        let dbRes = await datos(`INSERT INTO usuarios VALUES (default, '${nombre_usuario}', '${contrasenia}', ${rol.id})`);
+                        if (dbRes === 'error'){
+                            console.error("Hubo un error al inserter el usuario", dbRes)
+                            res.status(404).send("Hubo un error al inserter el usuario")
+                        } else{
+                            // console.log("Usuario insertado correctamente.")
+                            // console.log("Obteniendo información...")
+                            let usuario = await datos(`SELECT * FROM usuarios WHERE usuarios.nombre_usuario="${nombre_usuario}"`)
+                            console.log(usuario)
+                            if (usuario === 'error'){
+                                console.error("Hubo un error al inserter el usuario", usuario)
+                                res.status(404).send("Hubo un error al inserter el usuario")
+                            } else{
+                                let updateProf = await datos(`UPDATE profesores SET usuario_relacionado = ${usuario[0].id} WHERE id = ${persona.id}`)
+                                let datosPersonaP = await datos(`SELECT * FROM profesores WHERE id = ${persona.id}`)
+                                if (updateProf != 'error'){
+                                    usuario[0].persona = datosPersonaP[0]
+                                    console.log("Se insertó correctamente: ", usuario)
+                                    res.status(200).json(usuario)
+                                }
                             }
-                            break;
-                        case "secretaria":
-                            // Falta código
-                            break;
-                        case "administrador":
-                            // Falta código
-                            break;
-                        default:
-                            console.error("No se identificó el rol")
-                            response.status(404).send("No se pudo identificar el rol")
+                        }
                     }
-
-
-                    // res.status(200).send("El usuario se insertó correctamente.")
-                }
+                    break;
+                case "Secretaria":
+                    // Según el ejercicio, ya tienen usuarios y de momento son estáticos
+                    res.status(404).send("Las secretarias ya tienen cuentas de usuario")
+                    break;
+                case "administrador":
+                    // Según el ejercicio, ya tienen usuarios y de momento son estáticos
+                    res.status(404).send("Los administradores ya tienen cuentas de usuario")
+                    break;
+                default:
+                    console.log("No se identificó el rol");
             }
         }
     } catch (e){
