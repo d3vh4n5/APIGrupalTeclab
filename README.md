@@ -25,7 +25,7 @@ SECRET_KEY=
 
 Deberan completarla con el puerto que quieren utilizar para ejecutar la api y por el cual estará recibiendo las peticiones, y los demás son los datos de su base de datos MySQL local, o remota, dependiendo que vayan a usar. En mi caso tengo esta estructura 3 veces porque estuve probando 3 bases de datos a la vez, pero ustedes seguramente usen una.
 
-Luego de haber configurado el archivo .env, deben copiar todo el código SQL, que esta en la carpeta SQL de nombre "CODIGO_TABLAS_MOD.sql" con la estructura de la base de datos, en su base de datos para que se creen las tablas y el contenido.
+Luego de haber configurado el archivo .env, deben copiar todo el código SQL, que esta en la carpeta SQL de nombre "colegio_tablas.sql" con la estructura de la base de datos, en su base de datos para que se creen las tablas y el contenido.
 
 ---
 

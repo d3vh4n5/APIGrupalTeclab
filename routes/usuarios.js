@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router()
 const { db_local, db_real, datos } = require('../db');
+const { estadoDB } = require("../modules/estadoDB")
 
 router.get('/usuarios', async (req,res)=>{
     try{
@@ -100,8 +101,18 @@ router.post('/usuarios', async (req, res)=>{
         res.status(404).send("Ocurrió un error inesperado.")
     }
 })
-// router.put()
-// router.delete()
+router.put('/usuarios/:id', async (req,res)=>{
+    const {nombre_usuario, contrasenia, rol} = req.body;
+    const id = req.params.id
+    try{
+        estadoDB(res, db_local)
+        const update = await datos(`UPDATE usuarios SET nombre_usuario = "${nombre_usuario}", contrasenia = "${contrasenia}", rol = "${rol}" WHERE id = ${id}`)
+        const resp = await datos(`SELECT * FROM usuarios WHERE id=${id}`)
+        res.status(200).send(resp)
+    } catch (e){
+        res.status(404).send("Hubo un problema.")
+    }
+})
 
 
 
