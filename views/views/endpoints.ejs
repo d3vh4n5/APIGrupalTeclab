@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/index.css">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <%- include('../partials/nav')%>
+        <h1>Información sobre los endpoints</h1>
+        <p>
+            Se puede indicar un id específico mediante '/profesores/numeroID'
+        </p>
+        <blockquote class="quoteCode">
+            <code>
+                {url}/{endpoint}/numeroID
+            </code>
+        </blockquote>
+        <p>
+            También está disponible la opción de paginas por get:
+        </p>
+        <blockquote class="quoteCode">
+            <code>
+                {url}/{endpoint}?page=1&pageSize=2
+            </code>
+        </blockquote>
+        <ul>
+            <li>
+                <h3>'/profesores'</h3>
+                <h5>Métodos:</h5>
+                <ul>
+                    <li>GET</li>
+                </ul>
+            </li>
+            <li>
+                <h3>/notas</h3>
+                <h5>Métodos:</h5>
+                <ul>
+                    <li>GET</li>
+                    <li>POST</li>
+                    <li>PUT</li>
+                </ul>
+            </li>
+            <li>
+                <h3>/alumos</h3>
+                <h5>Métodos:</h5>
+                <ul>
+                    <li>GET</li>
+                    <li>POST</li>
+                    <li>PUT</li>
+                </ul>
+            </li>
+            <li>
+                <h3>/materias</h3>
+                <h5>Métodos:</h5>
+                <ul>
+                    <li>GET</li>
+                    <li>POST</li>
+                    <li>PUT</li>
+                </ul>
+            </li>
+            <li>
+                <h3>/usuarios</h3>
+                <h5>Métodos:</h5>
+                <ul>
+                    <li>GET</li>
+                    <li>POST</li>
+                    <li>PUT</li>
+                </ul>
+            </li>
+            <li>
+                <h3>/login</h3>
+                <h5>Métodos:</h5>
+                <ul>
+                    <li>POST</li>
+                </ul>
+            </li>
+        </ul>
+    </main>
+</body>
+</html>

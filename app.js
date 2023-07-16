@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const key = process.env.KEY
 const bodyParser = require('body-parser'); // esto es para poder usar los datos que vienen por POST
 app.use(bodyParser.json()); // para análisis de cuerpo JSON
 app.use(bodyParser.urlencoded({ extended: true })); // para análisis de cuerpo de formulario
@@ -15,7 +16,7 @@ app.use(express.static(__dirname + '/views'));// Este middleware será la carpet
 
 // Middleware para verificar la variable "key"
 // app.use((req, res, next) => {
-//      const expectedKey = 'jnasdn17436snaksdn';
+//      const expectedKey = key;
 //      const receivedKey = req.query.key;
    
 //      if (!receivedKey || receivedKey !== expectedKey) {
@@ -31,7 +32,6 @@ app.use(express.static(__dirname + '/views'));// Este middleware será la carpet
 //Vistas
 app.use(require('./routes/index'));
 app.use(require('./routes/endpoints'));
-app.use(require('./routes/help'));
 
 //Endpoints
 app.use(require('./routes/profesores'));

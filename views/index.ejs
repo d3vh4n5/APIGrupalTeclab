@@ -11,26 +11,20 @@
 <body>
     <main>
         <%- include('partials/nav')%>
-        <div class="logosContainer">
-            <img src="./assets/img/node.png" alt="Logo de Node.js" class="logos">
-            <img src="./assets/img/express.webp" alt="Logo de mysql" class="logos">
-            <img src="./assets/img/MySQL-logo.png" alt="Logo de mysql" class="logos">
-        </div>
-        <br>
-        <h1>Welcome to our API! <%= ':)' %></h1>
+        <h1><%= '!Bienvenidos a nuestra API!' %></h1>
         <br>
         <h5>
             <a href="https://github.com/d3vh4n5/APIGrupalTeclab" class="github"><i class="fa-brands fa-github"></i></a>
             <br>
             <br>
             <i>
-                Developed by 
-                <a href="">Diego</a>, 
-                <a href="">Matias</a> and 
-                <a href="">Juan</a>.
+                Desarrollada por: 
+                <a href="">Diego Torres</a>, 
+                <a href="https://www.linkedin.com/in/matias-ezequiel-lucero/">Matias Lucero</a> and 
+                <a href="https://www.linkedin.com/in/juanangelbasgall/">Juan Basgall</a>.
                 <br>
-                DB by 
-                <a href="">Gus</a> and 
+                Base de datos por:
+                <a href="">Gustavo</a> and 
                 <a href="">Mateo</a>.
                 <br>
             </i>
@@ -38,28 +32,26 @@
         <hr>
         <br>
         <p>
-            This Aplication was created as an extracurricular project of 
-            the subject "Web Integrations" of our career as 
-            'programming technique' Teclab.
-            <br><br>
-            Special thanks to 
-            <a href="https://www.linkedin.com/in/pmunizberrueta/">Pablo Muñiz</a> and 
-            <a href="https://www.linkedin.com/in/rodrigozapataagustin/">Rodrigo Zapata,</a> who were our mentors.
+            Esta API fue creada como un proyecto extracurricular de la materia "Integraciones Web" 
+            de nuestra Tecnicatura Superior en Programación en el instituto Teclab.
         </p>
-        <br>
+        <p>
+            El mismo consistía de la integración de 3 grupos: el de front-end, el de back-end y 
+            el de Base de Datos. A cada grupo se le asignaba un Trello con actividades 
+            específicas de su área, donde finalmente, deberían juntarse para "integrar" 
+            sus trabajos.
+        </p>
         <blockquote class="alert">
-            ⚠️ You will need an API-Key to use this API, for testing use = <code class="red">{url}?key=<b>jnasdn17436snaksdn</b></code> 
-            or contact developers at <a href="">mail@mail.com</a> for a custom key.
+            ⚠️ Será necesaria una API-Key para el uso de la api. En principo, para uso general, hemos habilitado 
+            la seguiente clave: <code class="red">{url}?key=<b>jnasdn17436snaksdn</b></code> .
+            Aunque para agilizar el desarrollo, puede ser que la necesidad de API-Key  directamente esté desactivada.
         </blockquote>
-        <br>
+        <h2>Planteamiento general de la integración entre datos y equipos:</h2>
         <img src="./assets/img/api.png" alt="Estructura de conexiones de la api" class="api">
+        <p>
+            Pueden verlo mas detallado en <a href="https://whimsical.com/organizando-api-shelbyville-9qiT1U5r8z5m3EpqEx8vii" target="_blank">Whimsical</a>.
+        </p>
     </main>
-    <footer>
-        <div>
-            <p>
-                This is the end, thank you for reading :)
-            </p>
-        </div>
-    </footer>
+    .
 </body>
 </html>
