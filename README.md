@@ -19,6 +19,8 @@ DB_USER=
 DB_PASS=
 DB_NAME=
 DB_PORT=
+# Auth
+SECRET_KEY=
 ```
 
 Deberan completarla con el puerto que quieren utilizar para ejecutar la api y por el cual estará recibiendo las peticiones, y los demás son los datos de su base de datos MySQL local, o remota, dependiendo que vayan a usar. En mi caso tengo esta estructura 3 veces porque estuve probando 3 bases de datos a la vez, pero ustedes seguramente usen una.
