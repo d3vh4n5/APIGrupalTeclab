@@ -26,7 +26,8 @@ router.post('/login', async (req, res)=>{
                         console.log(err)
                     } else {
                         res.json({
-                            token
+                            token,
+                            usuario : usuario[0] // not sure
                         });
                     }
                 });
