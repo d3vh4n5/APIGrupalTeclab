@@ -39,7 +39,7 @@ app.use(require('./routes/materias'));
 app.use(require('./routes/notas'));
 app.use(require('./routes/alumnos'));
 app.use(require('./routes/usuarios'));
-// app.use(require('./routes/login'));
+app.use(require('./routes/login'));
 
 
 /* Fin de los middlewares de rutas*/
