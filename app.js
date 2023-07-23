@@ -1,11 +1,24 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = process.env.PORT || 3000;
 const key = process.env.KEY
 const bodyParser = require('body-parser'); // esto es para poder usar los datos que vienen por POST
 app.use(bodyParser.json()); // para análisis de cuerpo JSON
 app.use(bodyParser.urlencoded({ extended: true })); // para análisis de cuerpo de formulario
+
+
+// Habilitar CORS para todas las solicitudes
+// app.use(cors());
+
+// Habilitar CORS específicas:
+app.use((req, res, next) => {
+     res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+     next();
+});
 
 
 /* Motor de vistas para interfaces web */
