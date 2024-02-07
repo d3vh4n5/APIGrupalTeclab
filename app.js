@@ -9,6 +9,12 @@ app.use(bodyParser.json()); // para análisis de cuerpo JSON
 app.use(bodyParser.urlencoded({ extended: true })); // para análisis de cuerpo de formulario
 
 
+// Middleware para registrar cada solicitud recibida
+app.use((req, res, next) => {
+     console.log('Solicitud recibida:', req.method, req.url);
+     next(); // Llama a next() para pasar el control al siguiente middleware
+});
+
 // Habilitar CORS para todas las solicitudes
 // app.use(cors());
 
@@ -60,11 +66,21 @@ app.use(require('./routes/login'));
 
 
 
-
-
+// Página de 404
+/*
+     Si una solicitud llega a este middleware, significa que ninguna ruta o 
+     middleware anterior en la aplicación Express coincidió con la solicitud. 
+*/
 app.use((req, res, next) =>{
      res.status(404).sendFile(__dirname +'/views/html/404.html');
+     // Como no se ejecuta la función next, este será el punto final para
+     // cualquier solicitud que no haya sido manejada por otras rutas
+     // o middlewares de la app. Luego de este punto, no se realizarán
+     // más acciones en la app
 })
+
+
+
 /*La aplicación queda escuchando y también dá una respuesta en la consola 
 para facilitarnos las pruebas y el acceso a la web*/
 app.listen(port, () => console.log(`app listening at: http://localhost:${port}/`));
