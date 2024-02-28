@@ -181,29 +181,29 @@ const actualizarAlumno = async (req, res) => {
     }
 }
 
-const eliminarAlumno = async (req, res) => {
-    const { id } = req.params
+// const eliminarAlumno = async (req, res) => {
+//     const { id } = req.params
 
-    const query = `
-        DELETE 
-        FROM alumnos
-        WHERE id='${id}'
-    `
-    try {
-        const resp = await consultar(query)
-        res.status(200).json({message: "Operación realizada con éxito", resp})
-    } catch (error) {
-        console.error(error)
-        res.status(500).json({error: "Hubo un error en el servidor"})
-    }
-}
+//     const query = `
+//         DELETE 
+//         FROM alumnos
+//         WHERE id='${id}'
+//     `
+//     try {
+//         const resp = await consultar(query)
+//         res.status(200).json({message: "Operación realizada con éxito", resp})
+//     } catch (error) {
+//         console.error(error)
+//         res.status(500).json({error: "Hubo un error en el servidor"})
+//     }
+// }
 
 
 router.get('/alumnos', obtenerAlumnos)
 router.get('/alumnos/:id', obtenerAlumno)
 router.post('/alumnos', crearAlumno)
 router.put('/alumnos/:id', actualizarAlumno)
-router.delete('/alumnos/:id', eliminarAlumno)
+// router.delete('/alumnos/:id', eliminarAlumno)
 
 
  
