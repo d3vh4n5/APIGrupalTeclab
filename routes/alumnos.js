@@ -124,9 +124,87 @@ async function obtenerAlumnos(req, res){
     }
 }
 
+async function obtenerAlumno (req, res){
+    const { id } = req.params
+    
+    try {
+        const query = `SELECT * FROM alumnos WHERE id=${id};`
+        const resp = await consultar(query)
+
+        if (resp[0]){
+            res.status(200).json(resp)
+        } else {
+            res.status(404).json({ error: "Alumno inexistente" })
+        }
+
+    } catch (e){
+        res.status(500).json({ error: "Hubo un error en el servidor" })
+    }
+}
+
+async function crearAlumno(req, res){
+    const { nombre, apellido, dni, curso, materias } = req.body;
+
+    try{
+        const query = `
+            INSERT INTO alumnos VALUES (default, '${nombre}', '${apellido}', '${dni}', '${curso}',null)
+        `
+        const resp = await consultar(query);
+        console.log(resp)
+
+
+        res.status(200).json({ message: "Alumno insertado correctamente", alumno: { id: resp.insertId, nombre, apellido, dni, curso }, operation: resp });
+
+
+    }catch(e){
+        res.status(500).json({error: "Hubo un error en el servidor"})
+    }
+}
+
+const actualizarAlumno = async (req, res) => {
+    const { id } = req.params
+    const { nombre, apellido, dni, curso} = req.body
+
+    const query = `
+        UPDATE alumnos
+        SET nombre='${nombre}', apellido='${apellido}', dni='${dni}', curso='${curso}'
+        WHERE id=${id};
+    `;
+
+    console.log(query)
+
+    try {
+        const resp = await consultar(query);
+        res.status(200).json({message: "Operación realizada con éxito", resp, alumno: { id, nombre, apellido, dni, curso}})
+    } catch (error) {
+        res.status(500).json({error: "Hubo un error en el servidor"})
+    }
+}
+
+const eliminarAlumno = async (req, res) => {
+    const { id } = req.params
+
+    const query = `
+        DELETE 
+        FROM alumnos
+        WHERE id='${id}'
+    `
+    try {
+        const resp = await consultar(query)
+        res.status(200).json({message: "Operación realizada con éxito", resp})
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({error: "Hubo un error en el servidor"})
+    }
+}
 
 
 router.get('/alumnos', obtenerAlumnos)
+router.get('/alumnos/:id', obtenerAlumno)
+router.post('/alumnos', crearAlumno)
+router.put('/alumnos/:id', actualizarAlumno)
+router.delete('/alumnos/:id', eliminarAlumno)
+
 
  
 
